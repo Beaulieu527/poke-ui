@@ -1,0 +1,6 @@
+<ng-container *ngIf="(pokemons$ | async) as pokemons; else loading">
+  <p *ngFor="let pokemon of pokemons">{{ pokemon.name }}</p>
+</ng-container>
+<ng-template #loading>
+  loading...
+</ng-template>
