@@ -1,12 +1,16 @@
-<ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails; else loading">
-  <h1>{{ pokemonDetails.name }}</h1>
-  <img [src]="pokemonDetails.src" />
-  <ul>
-    <li *ngFor="let stat of pokemonDetails.stats">
-      effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}
-    </li>
-  </ul>
+<ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails; else loader">
+  <ng-container *ngIf="!loading; else loader">
+    <button (click)="onPreviousClick(pokemonDetails.id)">previous</button
+    ><button (click)="onNextClick(pokemonDetails.id)">next</button>
+    <h1>{{ pokemonDetails.name }}</h1>
+    <img [src]="pokemonDetails.src" />
+    <ul>
+      <li *ngFor="let stat of pokemonDetails.stats">
+        effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}
+      </li>
+    </ul>
+  </ng-container>
 </ng-container>
-<ng-template #loading>
+<ng-template #loader>
   loading...
 </ng-template>
