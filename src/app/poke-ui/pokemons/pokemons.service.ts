@@ -1,36 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Pokemon } from './pokemon.model';
+import { PokemonsApiService, QueryPokemons } from '../services/pokemons-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonsService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private pokemonApiService: PokemonsApiService) {}
 
   getPokemons(query: QueryPokemons): Observable<Pokemon[]> {
-    const url = `https://pokeapi.co/api/v2/pokemon/${parseToStringQuery(query)}`;
-    return this.httpClient
-      .get<PokemonsResponse>(url)
-      .pipe(map(response => mapToViewPokemons(response.results)));
+    return this.pokemonApiService.getPokemons(query);
   }
-}
-
-function parseToStringQuery(query: QueryPokemons): string {
-  return Object.keys(query).reduce((prev, key) => `${prev}${key}=${query[key]}&`, `?`);
-}
-
-function mapToViewPokemons(pokemons: Pokemon[]): Pokemon[] {
-  return pokemons.map(({ name }) => ({ name }));
-}
-
-interface PokemonsResponse {
-  results: Pokemon[];
-}
-
-interface QueryPokemons {
-  offset: number;
-  limit: number;
 }

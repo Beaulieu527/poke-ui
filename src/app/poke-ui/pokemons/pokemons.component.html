@@ -1,5 +1,10 @@
 <ng-container *ngIf="(pokemons$ | async) as pokemons; else loading">
-  <p *ngFor="let pokemon of pokemons">{{ pokemon.name }}</p>
+  <a
+    *ngFor="let pokemon of pokemons"
+    [routerLink]="['/details', pokemon.id]"
+    style="display: block"
+    >{{ pokemon.name }}</a
+  >
 </ng-container>
 <ng-template #loading>
   loading...
