@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { PokemonsService } from './pokemons.service';
 import { Pokemon } from './pokemon.model';
 import { tap } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+const POKEMON_COUNT = 807;
 
 @Component({
   selector: 'app-pokemons',
@@ -15,12 +18,16 @@ export class PokemonsComponent implements OnInit {
     tap(() => (this.loading = false)),
   );
 
+  form: FormGroup;
+
+  private pokemonCount = POKEMON_COUNT;
   private offset = 0;
   private limit = 10;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private pokemonsService: PokemonsService,
   ) {}
 
@@ -31,6 +38,9 @@ export class PokemonsComponent implements OnInit {
     this.offset = offset ? Number(offset) : this.offset;
     this.actualizeQueryParams();
     this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
+    this.form = this.formBuilder.group({
+      search: [null, [Validators.required, Validators.max(this.pokemonCount), Validators.min(1)]],
+    });
   }
 
   nextPageClick(count: number): void {
