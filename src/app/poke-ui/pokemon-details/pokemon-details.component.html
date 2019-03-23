@@ -1,0 +1,12 @@
+<ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails; else loading">
+  <h1>{{ pokemonDetails.name }}</h1>
+  <img [src]="pokemonDetails.src" />
+  <ul>
+    <li *ngFor="let stat of pokemonDetails.stats">
+      effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}
+    </li>
+  </ul>
+</ng-container>
+<ng-template #loading>
+  loading...
+</ng-template>
