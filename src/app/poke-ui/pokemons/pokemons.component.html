@@ -1,11 +1,19 @@
-<ng-container *ngIf="(pokemons$ | async) as pokemons; else loading">
-  <a
-    *ngFor="let pokemon of pokemons"
-    [routerLink]="['/details', pokemon.id]"
-    style="display: block"
-    >{{ pokemon.name }}</a
-  >
+<ng-container *ngIf="(pokemons$ | async) as pokemons; else loader">
+  <ng-container *ngIf="!loading; else loader">
+    <a
+      *ngFor="let pokemon of pokemons"
+      [routerLink]="['/details', pokemon.id]"
+      style="display: block"
+      >{{ pokemon.name }}</a
+    >
+  </ng-container>
+
+  <ul>
+    <li *ngFor="let number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" (click)="nextPageClick(number)">
+      {{ number }}
+    </li>
+  </ul>
 </ng-container>
-<ng-template #loading>
+<ng-template #loader>
   loading...
 </ng-template>
