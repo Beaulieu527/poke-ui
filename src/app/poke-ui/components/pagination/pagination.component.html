@@ -1,0 +1,19 @@
+<ul class="pagination">
+  <li class="pagination__element" (click)="onPreviousPageClick()">
+    <a class="pagination__content">«</a>
+  </li>
+  <li
+    class="pagination__element"
+    *ngFor="let count of elementCounts"
+    [ngClass]="
+      isPageNumberActive(count)
+        ? 'pagination__element pagination__element--active'
+        : 'pagination__element'
+    "
+  >
+    <a class="pagination__content" (click)="onPageClick(count)">{{ getPageNumber(count) }}</a>
+  </li>
+  <li class="pagination__element" (click)="onNextPageClick()">
+    <a class="pagination__content">»</a>
+  </li>
+</ul>

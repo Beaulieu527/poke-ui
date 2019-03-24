@@ -20,11 +20,10 @@ export class PokemonsComponent implements OnInit {
   );
 
   form: FormGroup;
+  offset = 0;
+  limit = 10;
 
   private pokemonCount = POKEMON_COUNT;
-  private offset = 0;
-  private limit = 10;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,9 +43,9 @@ export class PokemonsComponent implements OnInit {
     });
   }
 
-  nextPageClick(count: number): void {
+  onPageChange(pageNumber: number): void {
     this.loading = true;
-    this.offset = this.limit * count;
+    this.offset = this.limit * pageNumber;
     this.actualizeQueryParams();
     this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
   }

@@ -1,24 +1,29 @@
-@import '../../../scss/base';
+@import '../../../../scss/base';
 
 :host {
   display: block;
-  max-width: 600px;
-  padding: 0 10px 20px 0;
-  margin: 0 auto;
-
-  @include respond-above('medium') {
-    padding: 0 20px;
-  }
 }
 
-.pokemons {
+.pagination {
+  display: flex;
+  justify-content: center;
+
   &__element {
     position: relative;
-    background: rgba(color-base('white'), 0.3);
+    background: rgba(color-base('white'), 1);
     transition: background 0.5s;
+    margin: 0 3px;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    cursor: pointer;
 
     &:hover {
-      background: rgba(color-base('white'), 0.5);
+      background: rgba(color-base('dark-orange'), 1);
+
+      &:before {
+        border-color: color-base('white');
+      }
     }
 
     &:before {
@@ -29,8 +34,9 @@
       position: absolute;
       left: 3px;
       top: 3px;
-      border: 2px solid color-base('white');
+      border: 2px solid color-base('dark-orange');
       pointer-events: none;
+      transition: border-color 0.5s;
     }
 
     &:after {
@@ -46,18 +52,23 @@
       transition: all 0.2s ease;
       z-index: -2;
     }
+
+    &--active {
+      background: rgba(color-base('dark-orange'), 1);
+
+      &:before {
+        border-color: color-base('white');
+      }
+    }
   }
 
   &__content {
-    display: block;
+    display: flex;
     width: 100%;
-    padding: 10px 20px;
-    margin: 5px 0;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     color: color-base('black');
   }
-}
-
-app-pagination {
-  margin-top: 30px;
 }
