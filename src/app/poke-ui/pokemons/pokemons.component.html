@@ -3,14 +3,11 @@
   <button [disabled]="!form.valid" [routerLink]="['/details', form.value.search]">Go !</button>
 </form>
 <ng-container *ngIf="(pokemons$ | async) as pokemons; else loader">
-  <ng-container *ngIf="!loading; else loader">
-    <a
-      *ngFor="let pokemon of pokemons"
-      [routerLink]="['/details', pokemon.id]"
-      style="display: block"
-      >{{ pokemon.name }}</a
-    >
-  </ng-container>
+  <ul class="pokemons">
+    <li class="pokemons__element" *ngFor="let pokemon of pokemons">
+      <a class="pokemons__content" [routerLink]="['/details', pokemon.id]">{{ pokemon.name }}</a>
+    </li>
+  </ul>
 
   <ul>
     <li *ngFor="let number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" (click)="nextPageClick(number)">
