@@ -1,0 +1,13 @@
+$colors-map-base: (
+  'white': #ffffff,
+  'orange': #fff692,
+  'black': #222,
+);
+
+@function color-base($color-name) {
+  $color: map-get($colors-map-base, $color-name);
+  @if $color {
+    @return $color;
+  }
+  @warn "Color '#{$color-name}' for colors map base '#{$colors-map-base}' was not found";
+}
