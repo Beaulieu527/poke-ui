@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { PokemonDetailsService } from './pokemon-details.service';
 import { PokemonDetails } from './pokemon-details.model';
+import { Title } from '@angular/platform-browser';
 
 const POKEMON_COUNT = 807;
 
@@ -16,12 +17,14 @@ export class PokemonDetailsComponent implements OnInit {
   loading = true;
   pokemonDetails$: Observable<PokemonDetails> = this.pokemonDetailsService.pokemonDetails$.pipe(
     tap(() => (this.loading = false)),
+    tap(({ name }) => this.title.setTitle(capitalize(name))),
   );
 
   private pokemonCount = POKEMON_COUNT;
   private pokemonFirstNumber = 1;
 
   constructor(
+    private title: Title,
     private location: Location,
     private route: ActivatedRoute,
     private pokemonDetailsService: PokemonDetailsService,
@@ -50,4 +53,10 @@ export class PokemonDetailsComponent implements OnInit {
   private actualizeQueryParams(id: string) {
     this.location.replaceState(`details/${id}`);
   }
+}
+function capitalize(value: string): string {
+  if (typeof value !== 'string') {
+    return '';
+  }
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
