@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PokemonsComponent } from './pokemons/pokemons.component';
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { InputComponent } from './components/input/input.component';
 
 const ROUTES: Routes = [
   {
@@ -18,7 +19,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [PokemonsComponent, PokemonDetailsComponent, PaginationComponent],
+  declarations: [PokemonsComponent, PokemonDetailsComponent, PaginationComponent, InputComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(ROUTES)],
 })
 export class PokeUiModule {}

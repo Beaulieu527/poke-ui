@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <input type="number" formControlName="search" />
+  <app-input [group]="form" [controlName]="'search'" [label]="'ID'"></app-input>
   <button [disabled]="!form.valid" [routerLink]="['/details', form.value.search]">Go !</button>
 </form>
 <ng-container *ngIf="(pokemons$ | async) as pokemons; else loader">
