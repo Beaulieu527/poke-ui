@@ -3,11 +3,108 @@
 :host {
   display: block;
   max-width: 600px;
-  padding: 0 10px 20px 0;
+  padding: 0 10px;
   margin: 0 auto;
 
   @include respond-above('medium') {
     padding: 0 20px;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  margin: 25px 0 0 0;
+
+  &__input {
+    display: inline-flex;
+    flex: 1;
+    margin-right: 5px;
+
+    @include respond-above('medium') {
+      flex: 3;
+      margin-right: 15px;
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    flex: 1;
+  }
+}
+
+.button {
+  border-width: 0;
+  outline: none;
+  width: 100%;
+
+  position: relative;
+  background: rgba(color-base('dark-orange'), 1);
+  transition: background 0.5s;
+  margin: 0 3px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:not([disabled]):hover,
+  &:not([disabled]):active,
+  &:not([disabled]):focus {
+    background: rgba(color-base('white'), 1);
+
+    &:before {
+      border-color: rgba(color-base('dark-orange'), 1);
+    }
+
+    .button__content {
+      color: color-base('dark-orange');
+    }
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    border: 2px solid color-base('white');
+    pointer-events: none;
+    transition: border-color 0.5s;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    left: 7px;
+    right: 7px;
+    bottom: 2px;
+    background: transparent;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    z-index: -2;
+  }
+
+  &[disabled] {
+    background: rgba(color-base('dark-orange'), 0.8);
+
+    &:before {
+      border-color: rgba(color-base('white'), 0.8);
+    }
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+    padding: 12px 20px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.5s;
+    color: color-base('white');
   }
 }
 
@@ -56,10 +153,6 @@
     text-decoration: none;
     color: color-base('black');
   }
-}
-
-app-input {
-  display: inline-flex;
 }
 
 app-pagination {

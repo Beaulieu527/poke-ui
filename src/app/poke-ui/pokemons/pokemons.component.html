@@ -1,6 +1,12 @@
-<form [formGroup]="form">
-  <app-input [group]="form" [controlName]="'search'" [label]="'ID'"></app-input>
-  <button [disabled]="!form.valid" [routerLink]="['/details', form.value.search]">Go !</button>
+<form [formGroup]="form" class="form">
+  <app-input class="form__input" [group]="form" [controlName]="'search'" [label]="'ID'"></app-input>
+  <button
+    class="form__button button"
+    [disabled]="!form.valid"
+    [routerLink]="['/details', form.value.search]"
+  >
+    <span class="button__content">Search</span>
+  </button>
 </form>
 <ng-container *ngIf="(pokemons$ | async) as pokemons; else loader">
   <ul class="pokemons">

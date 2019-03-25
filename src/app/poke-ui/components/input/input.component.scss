@@ -1,14 +1,14 @@
 @import '~src/scss/base';
 
 $primary-color: color-base('dark-orange');
-$secondary-color: color-base('onahau');
-$white-color: color-base('dark-orange');
+$secondary-color: color-base('gray');
 
 .group {
   position: relative;
-  margin: 25px 0 5px 0;
+  margin: 5px 0 5px 0;
   background: white;
   height: 44px;
+  width: 100%;
 
   &:before {
     content: '';
@@ -31,7 +31,7 @@ input {
   display: block;
   width: calc(100% - 6px);
   border: none;
-  border-bottom: 2px solid $secondary-color;
+  border-bottom: 2px solid color-base('onahau');
   position: relative;
   margin: 0 3px;
 }
@@ -41,7 +41,7 @@ input:focus {
 
 /* LABEL ======================================= */
 label {
-  color: color-base('gray');
+  color: $secondary-color;
   font-size: 16px;
   font-weight: normal;
   position: absolute;
@@ -58,7 +58,7 @@ input:focus ~ label,
 input:valid ~ label {
   top: -20px;
   font-size: 13px;
-  color: $primary-color;
+  color: $secondary-color;
   opacity: 0.6;
 }
 
