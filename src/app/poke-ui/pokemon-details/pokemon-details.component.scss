@@ -1,17 +1,56 @@
 @import '~src/scss/base';
 
+:host {
+  display: block;
+  max-width: 600px;
+  padding: 0 10px;
+  margin: 0 auto;
+
+  @include respond-above('medium') {
+    padding: 0 20px;
+  }
+}
+
+h1 {
+  color: color-base('violet');
+}
+
+.pokemon-area {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-height: 100px;
+}
+
 img {
   animation: bounce 0.8s ease infinite;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+
+  &__left {
+    left: 0;
+    transform: translateY(-50%) translateX(90%) scaleX(1) scaleY(1) rotate(180deg);
+  }
+
+  &__right {
+    right: 0;
+
+    transform: translateY(-50%) translateX(-90%) scaleX(1) scaleY(1);
+  }
 }
 
 @keyframes bounce {
   0%,
   100% {
-    -webkit-transform: translateY(-50%) translateX(-50%) scaleX(1) scaleY(1);
     transform: translateY(0%) translateX(0%) scaleX(1) scaleY(1);
   }
   50% {
-    -webkit-transform: translateY(-60%) translateX(-50%) scaleX(0.95) scaleY(1.03);
     transform: translateY(-10%) translateX(0%) scaleX(0.95) scaleY(1.03);
   }
 }

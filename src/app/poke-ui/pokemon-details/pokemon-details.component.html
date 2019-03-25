@@ -1,9 +1,11 @@
 <ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails; else loader">
   <ng-container *ngIf="!loading; else loader">
-    <button (click)="onPreviousClick(pokemonDetails.id)">previous</button
-    ><button (click)="onNextClick(pokemonDetails.id)">next</button>
     <h1>{{ pokemonDetails.name }}</h1>
-    <img [src]="pokemonDetails.src" />
+    <div class="pokemon-area">
+      <app-arrow class="arrow arrow__left" (click)="onPreviousClick(pokemonDetails.id)"></app-arrow>
+      <img [src]="pokemonDetails.src" />
+      <app-arrow class="arrow arrow__right" (click)="onNextClick(pokemonDetails.id)"></app-arrow>
+    </div>
     <ul>
       <li *ngFor="let stat of pokemonDetails.stats">
         effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}
