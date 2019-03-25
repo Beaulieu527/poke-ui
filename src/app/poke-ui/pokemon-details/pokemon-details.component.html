@@ -6,15 +6,24 @@
       <img [src]="pokemonDetails.src" />
       <app-arrow class="arrow arrow__right" (click)="onNextClick(pokemonDetails.id)"></app-arrow>
     </div>
-    <app-radar-chart
-      [radarChartData]="chartDataSets"
-      [radarChartLabels]="chartLabels"
-    ></app-radar-chart>
-    <ul>
-      <li *ngFor="let stat of pokemonDetails.stats">
-        effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}
-      </li>
-    </ul>
+    <div class="pokemon-stats">
+      <app-radar-chart
+        [radarChartData]="chartDataSets"
+        [radarChartLabels]="chartLabels"
+      ></app-radar-chart>
+      <div class="table">
+        <div class="table__row table__row--head">
+          <div class="table__item"></div>
+          <div class="table__item">Base</div>
+          <div class="table__item">EV</div>
+        </div>
+        <div class="table__row" *ngFor="let stat of pokemonDetails.stats">
+          <div class="table__item">{{ stat.name }}</div>
+          <div class="table__item">{{ stat.baseStat }}</div>
+          <div class="table__item">{{ stat.effort }}</div>
+        </div>
+      </div>
+    </div>
   </ng-container>
 </ng-container>
 <ng-template #loader>

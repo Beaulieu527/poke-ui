@@ -2,9 +2,10 @@
 
 :host {
   display: block;
-  max-width: 600px;
+  max-width: 800px;
   padding: 0 10px;
   margin: 0 auto;
+  overflow-x: hidden;
 
   @include respond-above('medium') {
     padding: 0 20px;
@@ -15,6 +16,7 @@ h1 {
   color: color-base('violet');
   text-align: center;
   margin-bottom: 0;
+  text-transform: capitalize;
 }
 
 .pokemon-area {
@@ -22,28 +24,89 @@ h1 {
   position: relative;
   display: flex;
   justify-content: center;
-  min-height: 100px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  min-height: 150px;
+
+  @include respond-above('medium') {
+    min-height: 200px;
+  }
+}
+
+.pokemon-stats {
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  app-radar-chart {
+    flex: 1 0 150%;
+    margin-left: -25%;
+  }
+
+  .table {
+    flex: 1 1 100%;
+    margin-top: 30px;
+  }
+
+  @include respond-above('medium') {
+    app-radar-chart {
+      flex: 1;
+      margin-left: 0;
+    }
+  }
+
+  @include respond-above('large') {
+    flex-wrap: nowrap;
+    transform: translateX(6%);
+
+    app-radar-chart {
+      flex: 2;
+      order: 2;
+      margin-left: 0;
+    }
+
+    .table {
+      flex: 1;
+      order: 1;
+      margin-top: 0;
+    }
+  }
 }
 
 img {
+  min-height: 150px;
+  width: auto;
   animation: bounce 0.8s ease infinite;
+
+  @include respond-above('medium') {
+    min-height: 200px;
+  }
 }
 
 .arrow {
   position: absolute;
   top: 50%;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  -webkit-transform-origin: right center;
+  transform-origin: right center;
 
+  @include respond-above('medium') {
+    width: 43px;
+    height: 43px;
+  }
   &__left {
     left: 0;
-    transform: translateY(-50%) translateX(90%) scaleX(1) scaleY(1) rotate(180deg);
+    transform: translateY(-50%) translateX(0) scaleX(1) scaleY(1) rotate(180deg);
   }
 
   &__right {
     right: 0;
 
-    transform: translateY(-50%) translateX(-90%) scaleX(1) scaleY(1);
+    transform: translateY(-50%) translateX(-100%) scaleX(1) scaleY(1);
   }
 }
 
@@ -54,5 +117,62 @@ img {
   }
   50% {
     transform: translateY(-10%) translateX(0%) scaleX(0.95) scaleY(1.03);
+  }
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: rgba(color-base('white'), 0.3);
+  transition: background 0.5s;
+  padding: 4px 4px;
+  font-size: 14px;
+
+  &:before {
+    content: '';
+    display: block;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    border: 2px solid color-base('white');
+    pointer-events: none;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    left: 7px;
+    right: 7px;
+    bottom: 2px;
+    background: transparent;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    z-index: -2;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid color-base('white');
+    padding: 2px 5px;
+
+    &:first-of-type {
+      flex: 2;
+    }
+
+    &:not(:first-of-type) {
+      flex: 1;
+      justify-content: center;
+    }
   }
 }
