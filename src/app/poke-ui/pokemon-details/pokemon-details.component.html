@@ -6,6 +6,10 @@
       <img [src]="pokemonDetails.src" />
       <app-arrow class="arrow arrow__right" (click)="onNextClick(pokemonDetails.id)"></app-arrow>
     </div>
+    <app-radar-chart
+      [radarChartData]="chartDataSets"
+      [radarChartLabels]="chartLabels"
+    ></app-radar-chart>
     <ul>
       <li *ngFor="let stat of pokemonDetails.stats">
         effort: {{ stat.effort }} / baseStat: {{ stat.baseStat }} / name: {{ stat.name }}

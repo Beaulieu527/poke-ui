@@ -25,7 +25,7 @@ export class PokemonDetailsApiService {
       stats: stats.map(({ base_stat, effort, stat }) => ({
         effort: String(effort),
         baseStat: String(base_stat),
-        name: stat.name,
+        name: STAT_NAME_MAP.get(stat.name),
       })),
     };
   }
@@ -45,9 +45,27 @@ interface Stat {
 }
 
 interface MetaStat {
-  name: string;
+  name: NameType;
   url: string;
 }
+
+enum NameType {
+  Speed = 'speed',
+  SpecialDefense = 'special-defense',
+  SpecialAttack = 'special-attack',
+  Defense = 'defense',
+  Attack = 'attack',
+  Hp = 'hp',
+}
+
+export const STAT_NAME_MAP: Map<NameType, string> = new Map([
+  [NameType.Speed, 'Speed'],
+  [NameType.SpecialDefense, 'Special Defense'],
+  [NameType.SpecialAttack, 'Special Attack'],
+  [NameType.Defense, 'Defense'],
+  [NameType.Attack, 'Attack'],
+  [NameType.Hp, 'Hp'],
+]);
 
 interface Sprites {
   front_default: string;

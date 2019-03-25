@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Label } from 'ng2-charts';
+import { ChartDataSets } from 'chart.js';
 import { PokemonDetailsService } from './pokemon-details.service';
-import { PokemonDetails } from './pokemon-details.model';
-import { Title } from '@angular/platform-browser';
+import { PokemonDetails, Stat } from './pokemon-details.model';
 
 const POKEMON_COUNT = 807;
 
@@ -18,8 +20,13 @@ export class PokemonDetailsComponent implements OnInit {
   loading = true;
   pokemonDetails$: Observable<PokemonDetails> = this.pokemonDetailsService.pokemonDetails$.pipe(
     tap(() => (this.loading = false)),
+    tap(({ stats }) => (this.chartDataSets = mapToChartDataSets(stats))),
+    tap(({ stats }) => (this.chartLabels = mapToChartLabels(stats))),
     tap(({ name }) => this.title.setTitle(capitalize(name))),
   );
+
+  chartLabels: Label[];
+  chartDataSets: ChartDataSets[];
 
   private pokemonCount = POKEMON_COUNT;
   private pokemonFirstNumber = 1;
@@ -60,4 +67,16 @@ function capitalize(value: string): string {
     return '';
   }
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function mapToChartDataSets(stats: Stat[]): ChartDataSets[] {
+  return [
+    {
+      data: stats.map(({ baseStat }) => Number(baseStat)),
+    },
+  ];
+}
+
+function mapToChartLabels(stats: Stat[]): Label[] {
+  return stats.map(({ name }) => name);
 }

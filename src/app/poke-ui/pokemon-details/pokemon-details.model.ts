@@ -5,7 +5,7 @@ export interface PokemonDetails {
   stats: Stat[];
 }
 
-interface Stat {
+export interface Stat {
   baseStat: string;
   effort: string;
   name: string;
