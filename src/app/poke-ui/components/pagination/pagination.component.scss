@@ -26,6 +26,15 @@
       }
     }
 
+    @media (hover: none) {
+      &:hover {
+        background: rgba(color-base('white'), 1);
+        &:before {
+          border-color: color-base('dark-orange');
+        }
+      }
+    }
+
     &:before {
       content: '';
       display: block;
