@@ -1,5 +1,7 @@
 <form [formGroup]="form" class="form">
-  <app-input class="form__input" [group]="form" [controlName]="'search'" [label]="'ID'"></app-input>
+  <app-input class="form__input" [label]="'ID'">
+    <input type="number" [formControlName]="'search'" required />
+  </app-input>
   <app-arrow
     class="form__button"
     [class.disabled]="!form.valid"

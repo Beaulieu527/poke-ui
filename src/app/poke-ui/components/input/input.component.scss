@@ -25,7 +25,8 @@ $secondary-color: color-base('gray');
     z-index: -2;
   }
 }
-input {
+
+::ng-deep input {
   font-size: 16px;
   padding: 12px 17px 9px 17px;
   display: block;
@@ -34,21 +35,42 @@ input {
   border-bottom: 2px solid color-base('onahau');
   position: relative;
   margin: 0 3px;
-}
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+
+  &[type='number']::-webkit-outer-spin-button,
+  &[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+  &:focus {
+    outline: none;
+  }
+
+  /* active state */
+  &:focus ~ label,
+  &:valid ~ label {
+    top: -20px;
+    font-size: 13px;
+    color: $secondary-color;
+    opacity: 0.6;
+  }
+
+  /* active state */
+  &:focus ~ .bar:before,
+  &:focus ~ .bar:after {
+    width: 50%;
+  }
+  /* active state */
+  &:focus ~ .highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    -moz-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease;
+  }
 }
 
-input[type='number'] {
-  -moz-appearance: textfield;
-}
-input:focus {
-  outline: none;
-}
-
-/* LABEL ======================================= */
 label {
   color: $secondary-color;
   font-size: 16px;
@@ -62,16 +84,6 @@ label {
   -webkit-transition: 0.2s ease all;
 }
 
-/* active state */
-input:focus ~ label,
-input:valid ~ label {
-  top: -20px;
-  font-size: 13px;
-  color: $secondary-color;
-  opacity: 0.6;
-}
-
-/* BOTTOM BARS ================================= */
 .bar {
   position: relative;
   display: block;
@@ -86,7 +98,6 @@ input:valid ~ label {
   bottom: 0;
   position: absolute;
   background: $primary-color;
-  //opacity: 0.6;
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
@@ -98,13 +109,6 @@ input:valid ~ label {
   right: 50%;
 }
 
-/* active state */
-input:focus ~ .bar:before,
-input:focus ~ .bar:after {
-  width: 50%;
-}
-
-/* HIGHLIGHTER ================================== */
 .highlight {
   position: absolute;
   height: 60%;
@@ -115,14 +119,6 @@ input:focus ~ .bar:after {
   opacity: 0.5;
 }
 
-/* active state */
-input:focus ~ .highlight {
-  -webkit-animation: inputHighlighter 0.3s ease;
-  -moz-animation: inputHighlighter 0.3s ease;
-  animation: inputHighlighter 0.3s ease;
-}
-
-/* ANIMATIONS ================ */
 @-webkit-keyframes inputHighlighter {
   from {
     background: $primary-color;
