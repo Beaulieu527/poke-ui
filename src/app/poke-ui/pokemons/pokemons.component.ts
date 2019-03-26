@@ -19,6 +19,8 @@ export class PokemonsComponent implements OnInit {
   offset = 0;
   limit = 10;
   loading = true;
+  paginationMaxPage = 10;
+  paginationCurrentPage = 1;
   pokemons$: Observable<Pokemon[]> = this.pokemonsService.pokemons$.pipe(
     tap(() => (this.loading = false)),
   );
@@ -34,6 +36,7 @@ export class PokemonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setQueryParamsState();
+    this.paginationCurrentPage = this.offset / this.limit + 1;
     this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
     this.form = this.formBuilder.group({
       search: [null, [Validators.required, Validators.max(this.pokemonCount), Validators.min(1)]],
@@ -42,7 +45,7 @@ export class PokemonsComponent implements OnInit {
 
   onPageChange(pageNumber: number): void {
     this.loading = true;
-    this.offset = this.limit * pageNumber;
+    this.offset = this.limit * (pageNumber - 1);
     this.actualizeQueryParams();
     this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
   }

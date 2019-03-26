@@ -22,5 +22,10 @@
   </ul>
 </div>
 
-<app-pagination class="pagination" [maxPage]="10" (pageChange)="onPageChange($event)">
+<app-pagination
+  class="pagination"
+  [maxPage]="paginationMaxPage"
+  [currentPage]="paginationCurrentPage"
+  (pageChange)="onPageChange($event)"
+>
 </app-pagination>
