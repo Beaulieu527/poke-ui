@@ -39,6 +39,10 @@ export class PokemonsComponent implements OnInit {
     });
   }
 
+  getPadId(id: string): string {
+    return `#${pad(id, 3)}`;
+  }
+
   onPageChange(pageNumber: number): void {
     this.loading = true;
     this.offset = this.limit * pageNumber;
@@ -62,4 +66,11 @@ export class PokemonsComponent implements OnInit {
     this.offset = offset ? Number(offset) : this.offset;
     this.actualizeQueryParams();
   }
+}
+
+function pad(value: string, size: number): string {
+  while (value.length < size) {
+    value = '0' + value;
+  }
+  return value;
 }

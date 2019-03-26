@@ -198,6 +198,11 @@
     margin: 5px 0;
     text-decoration: none;
     color: color-base('black');
+
+    span {
+      color: color-base('gray');
+      margin-right: 5px;
+    }
   }
 }
 

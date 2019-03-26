@@ -14,9 +14,10 @@
   <app-pokeball-spinner class="spinner" [class.show]="loading"></app-pokeball-spinner>
   <ul class="pokemon-list" *ngIf="(pokemons$ | async) as pokemons">
     <li class="pokemon-list__element" *ngFor="let pokemon of pokemons">
-      <a class="pokemon-list__content" [routerLink]="['/details', pokemon.id]">{{
-        pokemon.name
-      }}</a>
+      <a class="pokemon-list__content" [routerLink]="['/details', pokemon.id]">
+        <span>{{ getPadId(pokemon.id) }}</span
+        >{{ pokemon.name }}</a
+      >
     </li>
   </ul>
 </div>
