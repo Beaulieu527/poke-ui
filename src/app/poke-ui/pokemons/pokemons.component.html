@@ -1,12 +1,10 @@
 <form [formGroup]="form" class="form">
   <app-input class="form__input" [group]="form" [controlName]="'search'" [label]="'ID'"></app-input>
-  <button
-    class="form__button button"
-    [disabled]="!form.valid"
+  <app-arrow
+    class="form__button"
+    [class.disabled]="!form.valid"
     [routerLink]="['/details', form.value.search]"
-  >
-    <span class="button__content">Search</span>
-  </button>
+  ></app-arrow>
 </form>
 
 <div class="pokemons">

@@ -17,21 +17,33 @@
   align-items: baseline;
   flex-wrap: nowrap;
   margin: 25px 0 0 0;
+  position: relative;
 
   &__input {
     display: inline-flex;
     flex: 1;
-    margin-right: 5px;
-
-    @include respond-above('medium') {
-      flex: 3;
-      margin-right: 15px;
-    }
   }
 
   &__button {
-    display: inline-flex;
-    flex: 1;
+    position: absolute;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+
+    transform: translateY(-50%);
+    right: 15px;
+    margin-top: -2px;
+
+    opacity: 1;
+    transition: opacity 0.5s;
+
+    &.disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
 }
 

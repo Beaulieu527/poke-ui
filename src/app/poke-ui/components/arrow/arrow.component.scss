@@ -1,16 +1,12 @@
 @import '~src/scss/base';
 
 svg {
-  width: 40px;
+  width: 100%;
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4));
   animation: smoosh 0.7s ease infinite;
   position: absolute;
   left: 0;
   top: 0;
-
-  @include respond-above('medium') {
-    width: 43px;
-  }
 }
 
 svg:not(:root) {
