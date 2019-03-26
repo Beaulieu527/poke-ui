@@ -8,6 +8,7 @@ import { Label } from 'ng2-charts';
 import { ChartDataSets } from 'chart.js';
 import { PokemonDetailsService } from './pokemon-details.service';
 import { PokemonDetails, Stat } from './pokemon-details.model';
+import { capitalize, pad } from '../utils';
 
 const POKEMON_COUNT = 807;
 
@@ -57,16 +58,17 @@ export class PokemonDetailsComponent implements OnInit {
     this.pokemonDetailsService.fetchPokemonDetails(String(nextId));
   }
 
+  getPadId(id: string): string {
+    return `#${pad(id, 3)}`;
+  }
+
+  getCapitalize(value: string): string {
+    return capitalize(value);
+  }
+
   private actualizeQueryParams(id: string): void {
     this.location.replaceState(`details/${id}`);
   }
-}
-
-function capitalize(value: string): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function mapToChartDataSets(stats: Stat[]): ChartDataSets[] {

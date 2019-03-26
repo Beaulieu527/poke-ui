@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { PokemonsService } from './pokemons.service';
 import { Pokemon } from './pokemon.model';
+import { pad } from '../utils';
 
 const POKEMON_COUNT = 807;
 
@@ -39,15 +40,15 @@ export class PokemonsComponent implements OnInit {
     });
   }
 
-  getPadId(id: string): string {
-    return `#${pad(id, 3)}`;
-  }
-
   onPageChange(pageNumber: number): void {
     this.loading = true;
     this.offset = this.limit * pageNumber;
     this.actualizeQueryParams();
     this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
+  }
+
+  getPadId(id: string): string {
+    return `#${pad(id, 3)}`;
   }
 
   private actualizeQueryParams(): void {
@@ -66,11 +67,4 @@ export class PokemonsComponent implements OnInit {
     this.offset = offset ? Number(offset) : this.offset;
     this.actualizeQueryParams();
   }
-}
-
-function pad(value: string, size: number): string {
-  while (value.length < size) {
-    value = '0' + value;
-  }
-  return value;
 }
