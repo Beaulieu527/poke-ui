@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { PokemonDetails } from '../pokemon-details/pokemon-details.model';
 
 @Injectable({
@@ -58,7 +58,11 @@ enum NameType {
   Hp = 'hp',
 }
 
-export const STAT_NAME_MAP: Map<NameType, string> = new Map([
+interface Sprites {
+  front_default: string;
+}
+
+const STAT_NAME_MAP: Map<NameType, string> = new Map([
   [NameType.Speed, 'Speed'],
   [NameType.SpecialDefense, 'Special Defense'],
   [NameType.SpecialAttack, 'Special Attack'],
@@ -66,7 +70,3 @@ export const STAT_NAME_MAP: Map<NameType, string> = new Map([
   [NameType.Attack, 'Attack'],
   [NameType.Hp, 'Hp'],
 ]);
-
-interface Sprites {
-  front_default: string;
-}
