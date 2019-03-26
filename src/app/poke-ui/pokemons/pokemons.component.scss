@@ -138,7 +138,7 @@
     }
   }
 
-  app-pokeball-spinner {
+  .spinner {
     display: block;
     position: absolute;
     top: 50%;
@@ -201,6 +201,6 @@
   }
 }
 
-app-pagination {
+.pagination {
   margin-top: 20px;
 }
