@@ -109,6 +109,40 @@
 }
 
 .pokemons {
+  position: relative;
+  min-height: 485px;
+
+  .spinner-backdrop {
+    background-color: color-base('black');
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s linear;
+
+    &.show {
+      opacity: 0.5;
+    }
+  }
+
+  app-pokeball-spinner {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 125px;
+    opacity: 0;
+    transition: opacity 0.15s linear;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+}
+
+.pokemon-list {
   &__element {
     position: relative;
     background: rgba(color-base('white'), 0.3);

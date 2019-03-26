@@ -8,14 +8,17 @@
     <span class="button__content">Search</span>
   </button>
 </form>
-<ng-container *ngIf="(pokemons$ | async) as pokemons; else loader">
-  <ul class="pokemons">
-    <li class="pokemons__element" *ngFor="let pokemon of pokemons">
-      <a class="pokemons__content" [routerLink]="['/details', pokemon.id]">{{ pokemon.name }}</a>
+
+<div class="pokemons">
+  <div class="spinner-backdrop" [class.show]="loading"></div>
+  <app-pokeball-spinner [class.show]="loading"></app-pokeball-spinner>
+  <ul class="pokemon-list" *ngIf="(pokemons$ | async) as pokemons">
+    <li class="pokemon-list__element" *ngFor="let pokemon of pokemons">
+      <a class="pokemon-list__content" [routerLink]="['/details', pokemon.id]">{{
+        pokemon.name
+      }}</a>
     </li>
   </ul>
-  <app-pagination [maxPage]="10" (pageChange)="onPageChange($event)"> </app-pagination>
-</ng-container>
-<ng-template #loader>
-  loading...
-</ng-template>
+</div>
+
+<app-pagination [maxPage]="10" (pageChange)="onPageChange($event)"> </app-pagination>
