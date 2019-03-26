@@ -18,15 +18,14 @@ const POKEMON_COUNT = 807;
 })
 export class PokemonDetailsComponent implements OnInit {
   loading = true;
+  chartLabels: Label[];
+  chartDataSets: ChartDataSets[];
   pokemonDetails$: Observable<PokemonDetails> = this.pokemonDetailsService.pokemonDetails$.pipe(
     tap(() => (this.loading = false)),
     tap(({ stats }) => (this.chartDataSets = mapToChartDataSets(stats))),
     tap(({ stats }) => (this.chartLabels = mapToChartLabels(stats))),
     tap(({ name }) => this.title.setTitle(capitalize(name))),
   );
-
-  chartLabels: Label[];
-  chartDataSets: ChartDataSets[];
 
   private pokemonCount = POKEMON_COUNT;
   private pokemonFirstNumber = 1;
@@ -44,24 +43,25 @@ export class PokemonDetailsComponent implements OnInit {
     );
   }
 
-  onPreviousClick(id: string) {
+  onPreviousClick(id: string): void {
     this.loading = true;
     const previousId = this.pokemonFirstNumber < Number(id) ? Number(id) - 1 : this.pokemonCount;
     this.actualizeQueryParams(String(previousId));
     this.pokemonDetailsService.fetchPokemonDetails(String(previousId));
   }
 
-  onNextClick(id: string) {
+  onNextClick(id: string): void {
     this.loading = true;
     const nextId = this.pokemonCount > Number(id) ? Number(id) + 1 : this.pokemonFirstNumber;
     this.actualizeQueryParams(String(nextId));
     this.pokemonDetailsService.fetchPokemonDetails(String(nextId));
   }
 
-  private actualizeQueryParams(id: string) {
+  private actualizeQueryParams(id: string): void {
     this.location.replaceState(`details/${id}`);
   }
 }
+
 function capitalize(value: string): string {
   if (typeof value !== 'string') {
     return '';
