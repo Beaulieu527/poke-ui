@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { PokemonsComponent } from './pokemons/pokemons.component';
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -38,6 +39,7 @@ const ROUTES: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(ROUTES),
     ChartsModule,
+    LazyLoadImageModule,
   ],
 })
 export class PokeUiModule {}

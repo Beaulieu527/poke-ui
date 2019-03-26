@@ -1,31 +1,27 @@
-<ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails; else loader">
-  <ng-container *ngIf="!loading; else loader">
-    <h1>{{ pokemonDetails.name }}</h1>
-    <div class="pokemon-area">
-      <app-arrow class="arrow arrow__left" (click)="onPreviousClick(pokemonDetails.id)"></app-arrow>
-      <img [src]="pokemonDetails.src" />
-      <app-arrow class="arrow arrow__right" (click)="onNextClick(pokemonDetails.id)"></app-arrow>
-    </div>
-    <div class="pokemon-stats">
-      <app-radar-chart
-        [radarChartData]="chartDataSets"
-        [radarChartLabels]="chartLabels"
-      ></app-radar-chart>
-      <div class="table">
-        <div class="table__row table__row--head">
-          <div class="table__item"></div>
-          <div class="table__item">Base</div>
-          <div class="table__item">EV</div>
-        </div>
-        <div class="table__row" *ngFor="let stat of pokemonDetails.stats">
-          <div class="table__item">{{ stat.name }}</div>
-          <div class="table__item">{{ stat.baseStat }}</div>
-          <div class="table__item">{{ stat.effort }}</div>
-        </div>
+<ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails">
+  <h1>{{ pokemonDetails.name }}</h1>
+  <div class="pokemon-area">
+    <app-arrow class="arrow arrow__left" (click)="onPreviousClick(pokemonDetails.id)"></app-arrow>
+    <img [lazyLoad]="pokemonDetails.src" [useSrcset]="true" [class.shadow]="loading" />
+    <app-pokeball-spinner [class.show]="loading"></app-pokeball-spinner>
+    <app-arrow class="arrow arrow__right" (click)="onNextClick(pokemonDetails.id)"></app-arrow>
+  </div>
+  <div class="pokemon-stats">
+    <app-radar-chart
+      [radarChartData]="chartDataSets"
+      [radarChartLabels]="chartLabels"
+    ></app-radar-chart>
+    <div class="table">
+      <div class="table__row table__row--head">
+        <div class="table__item"></div>
+        <div class="table__item">Base</div>
+        <div class="table__item">EV</div>
+      </div>
+      <div class="table__row" *ngFor="let stat of pokemonDetails.stats">
+        <div class="table__item">{{ stat.name }}</div>
+        <div class="table__item">{{ stat.baseStat }}</div>
+        <div class="table__item">{{ stat.effort }}</div>
       </div>
     </div>
-  </ng-container>
+  </div>
 </ng-container>
-<ng-template #loader>
-  loading...
-</ng-template>
