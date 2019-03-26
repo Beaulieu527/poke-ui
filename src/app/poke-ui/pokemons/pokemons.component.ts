@@ -4,10 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { PokemonsService } from './pokemons.service';
-import { Pokemon } from './pokemon.model';
+import { Pokemon, PokemonsQueryParams } from './pokemon.model';
 import { pad } from '../utils';
 
 const POKEMON_COUNT = 807;
+const INITIAL_POKEMONS_QUERY_PARAMS: PokemonsQueryParams = {
+  offset: 0,
+  limit: 10,
+};
 
 @Component({
   selector: 'app-pokemons',
@@ -16,11 +20,9 @@ const POKEMON_COUNT = 807;
 })
 export class PokemonsComponent implements OnInit {
   form: FormGroup;
-  offset = 0;
-  limit = 10;
   loading = true;
   paginationMaxPage = 10;
-  paginationCurrentPage = 1;
+  pokemonsQueryParams: PokemonsQueryParams = INITIAL_POKEMONS_QUERY_PARAMS;
   pokemons$: Observable<Pokemon[]> = this.pokemonsService.pokemons$.pipe(
     tap(() => (this.loading = false)),
   );
@@ -36,38 +38,38 @@ export class PokemonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setQueryParamsState();
-    this.paginationCurrentPage = this.offset / this.limit + 1;
-    this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
+    this.pokemonsService.fetchPokemons(this.pokemonsQueryParams);
     this.form = this.formBuilder.group({
       search: [null, [Validators.required, Validators.max(this.pokemonCount), Validators.min(1)]],
     });
   }
 
-  onPageChange(pageNumber: number): void {
+  onPageChange(pokemonsQueryParams: PokemonsQueryParams): void {
     this.loading = true;
-    this.offset = this.limit * (pageNumber - 1);
-    this.actualizeQueryParams();
-    this.pokemonsService.fetchPokemons({ offset: this.offset, limit: this.limit });
+    this.pokemonsQueryParams = pokemonsQueryParams;
+    this.pokemonsService.fetchPokemons(pokemonsQueryParams);
   }
 
   getPadId(id: string): string {
     return `#${pad(id, 3)}`;
   }
 
-  private actualizeQueryParams(): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { limit: this.limit, offset: this.offset },
-      queryParamsHandling: 'merge',
-      skipLocationChange: false,
-    });
-  }
-
   private setQueryParamsState(): void {
     const limit = this.route.snapshot.queryParamMap.get('limit');
     const offset = this.route.snapshot.queryParamMap.get('offset');
-    this.limit = limit ? Number(limit) : this.limit;
-    this.offset = offset ? Number(offset) : this.offset;
-    this.actualizeQueryParams();
+    this.pokemonsQueryParams = {
+      limit: limit ? Number(limit) : this.pokemonsQueryParams.limit,
+      offset: offset ? Number(offset) : this.pokemonsQueryParams.offset,
+    };
+    this.actualizeRouterQueryParams();
+  }
+
+  private actualizeRouterQueryParams(): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: this.pokemonsQueryParams,
+      queryParamsHandling: 'merge',
+      skipLocationChange: false,
+    });
   }
 }

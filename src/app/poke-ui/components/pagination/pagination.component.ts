@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PokemonsQueryParams } from '../../pokemons/pokemon.model';
 
 @Component({
   selector: 'app-pagination',
@@ -7,43 +8,82 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PaginationComponent {
   @Input() maxPage: number;
-  @Input() currentPage = 1;
-  @Output() pageChange = new EventEmitter<number>();
+  @Input() queryParams: PokemonsQueryParams;
+  @Output() queryParamsChange = new EventEmitter<PokemonsQueryParams>();
 
-  elementCount = 3;
-  elementCounts = Array(this.elementCount)
+  indexesLength = 3;
+  indexes = Array(this.indexesLength)
     .fill(0)
     .map((x, y) => x + y);
 
   onPreviousPageClick(): void {
-    if (this.currentPage > 1) {
-      this.currentPage = --this.currentPage;
-      this.pageChange.emit(this.currentPage);
+    if (this.getCurrentPointer() >= 1) {
+      this.queryParamsChange.emit({
+        offset: this.queryParams.offset - this.queryParams.limit,
+        limit: this.queryParams.limit,
+      });
     }
   }
 
-  onPageClick(elementCount: number): void {
-    const pageNumber = this.getPageNumber(elementCount);
-    if (this.currentPage !== pageNumber) {
-      this.currentPage = pageNumber;
-      this.pageChange.emit(this.currentPage);
+  onPageClick(index: number): void {
+    const pointer = this.getPointerByMaxPage(index);
+    if (this.getCurrentPointer() !== pointer) {
+      this.queryParamsChange.emit({
+        offset: pointer * this.queryParams.limit,
+        limit: this.queryParams.limit,
+      });
     }
   }
 
   onNextPageClick(): void {
-    if (this.currentPage < this.maxPage) {
-      this.currentPage = ++this.currentPage;
-      this.pageChange.emit(this.currentPage);
+    if (this.getCurrentPointer() < this.maxPage - 1) {
+      this.queryParamsChange.emit({
+        offset: this.queryParams.offset + this.queryParams.limit,
+        limit: this.queryParams.limit,
+      });
     }
   }
 
-  isPageNumberActive(elementCount: number): boolean {
-    return this.getPageNumber(elementCount) === this.currentPage;
+  isPageNumberActive(index: number): boolean {
+    return this.getPointerByMaxPage(index) === this.getCurrentPointer();
   }
 
-  getPageNumber(elementCount: number): number {
-    const minElementCount = this.maxPage - this.elementCount + 1;
-    const pageNumber = elementCount + this.currentPage;
-    return minElementCount > this.currentPage ? pageNumber : minElementCount + elementCount;
+  getPointerByMaxPage(index: number): number {
+    const minPageNumber = this.maxPage - this.indexesLength;
+    const currentPage = this.getCurrentPointer();
+    return minPageNumber >= currentPage ? index + currentPage : minPageNumber + index;
+  }
+
+  getQueryParams(index: number): PokemonsQueryParams {
+    return {
+      offset: this.getPointerByMaxPage(index) * this.queryParams.limit,
+      limit: this.queryParams.limit,
+    };
+  }
+
+  getPreviousQueryParams(): PokemonsQueryParams {
+    return {
+      offset: (this.getCurrentPointer() - 1) * this.queryParams.limit,
+      limit: this.queryParams.limit,
+    };
+  }
+
+  getNextQueryParams(): PokemonsQueryParams {
+    return {
+      offset: (this.getCurrentPointer() + 1) * this.queryParams.limit,
+      limit: this.queryParams.limit,
+    };
+  }
+
+  isPreviousPointer(): boolean {
+    return this.getCurrentPointer() >= 1;
+  }
+
+  isNextPointer(): boolean {
+    return this.getCurrentPointer() + 1 <= this.maxPage - 1;
+  }
+
+  private getCurrentPointer(): number {
+    return this.queryParams.offset / this.queryParams.limit;
   }
 }

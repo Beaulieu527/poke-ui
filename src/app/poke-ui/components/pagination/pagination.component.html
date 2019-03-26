@@ -1,19 +1,31 @@
 <ul class="pagination">
-  <li class="pagination__element" (click)="onPreviousPageClick()">
-    <a class="pagination__content">«</a>
+  <li
+    class="pagination__element"
+    (click)="onPreviousPageClick()"
+    [class.disabled]="!isPreviousPointer()"
+  >
+    <a class="pagination__content" [routerLink]="['/']" [queryParams]="getPreviousQueryParams()"
+      >«</a
+    >
   </li>
   <li
     class="pagination__element"
-    *ngFor="let count of elementCounts"
+    *ngFor="let index of indexes"
     [ngClass]="
-      isPageNumberActive(count)
+      isPageNumberActive(index)
         ? 'pagination__element pagination__element--active'
         : 'pagination__element'
     "
   >
-    <a class="pagination__content" (click)="onPageClick(count)">{{ getPageNumber(count) }}</a>
+    <a
+      class="pagination__content"
+      (click)="onPageClick(index)"
+      [routerLink]="['/']"
+      [queryParams]="getQueryParams(index)"
+      >{{ getPointerByMaxPage(index) + 1 }}</a
+    >
   </li>
-  <li class="pagination__element" (click)="onNextPageClick()">
-    <a class="pagination__content">»</a>
+  <li class="pagination__element" (click)="onNextPageClick()" [class.disabled]="!isNextPointer()">
+    <a class="pagination__content" [routerLink]="['/']" [queryParams]="getNextQueryParams()">»</a>
   </li>
 </ul>

@@ -25,7 +25,7 @@
 <app-pagination
   class="pagination"
   [maxPage]="paginationMaxPage"
-  [currentPage]="paginationCurrentPage"
-  (pageChange)="onPageChange($event)"
+  [queryParams]="pokemonsQueryParams"
+  (queryParamsChange)="onPageChange($event)"
 >
 </app-pagination>

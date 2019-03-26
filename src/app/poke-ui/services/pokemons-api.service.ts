@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pokemon } from '../pokemons/pokemon.model';
+import { Pokemon, PokemonsQueryParams } from '../pokemons/pokemon.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +10,15 @@ import { Pokemon } from '../pokemons/pokemon.model';
 export class PokemonsApiService {
   constructor(private httpClient: HttpClient) {}
 
-  getPokemons(query: QueryPokemons): Observable<Pokemon[]> {
-    const url = `https://pokeapi.co/api/v2/pokemon/${parseToStringQuery(query)}`;
+  getPokemons(pokemonsQueryParams: PokemonsQueryParams): Observable<Pokemon[]> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${parseToStringQuery(pokemonsQueryParams)}`;
     return this.httpClient
       .get<PokemonsResponse>(url)
       .pipe(map(response => mapToViewPokemons(response.results)));
   }
 }
 
-function parseToStringQuery(query: QueryPokemons): string {
+function parseToStringQuery(query: PokemonsQueryParams): string {
   return Object.keys(query).reduce((prev, key) => `${prev}${key}=${query[key]}&`, `?`);
 }
 
@@ -43,9 +43,4 @@ interface PokemonsResponse {
 interface Result {
   name: string;
   url: string;
-}
-
-export interface QueryPokemons {
-  offset: number;
-  limit: number;
 }
