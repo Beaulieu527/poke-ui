@@ -18,11 +18,10 @@ describe('Poke-UI', () => {
     expect(page.getPokemonList().count()).toBe(10);
   });
 
-  it('should show a second page of list and show selected pokemon', () => {
+  it('should search pokemon by ID and open page', () => {
     page.navigateTo();
-    page.getNewPage(3);
-    page.getPokemonFromList(6);
-    expect(page.getPokemonName().getText()).toBe('#027Sandshrew');
+    page.searchID(400);
+    expect(page.getPokemonName().getText()).toBe('#400Bibarel');
   });
 
   it('should view selected pokemon', () => {
@@ -41,10 +40,11 @@ describe('Poke-UI', () => {
     expect(page.getPokemonName().getText()).toBe('#002Ivysaur');
   });
 
-  it('should search pokemon by ID and open page', () => {
+  it('should allow you to click a new page of list and show selected pokemon', () => {
     page.navigateTo();
-    page.searchID(400);
-    expect(page.getPokemonName().getText()).toBe('#400Bibarel');
+    page.getNewPage(3);
+    page.getPokemonFromList(6);
+    expect(page.getPokemonName().getText()).toBe('#027Sandshrew');
   });
 
   afterEach(async () => {
