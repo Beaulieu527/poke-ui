@@ -4,7 +4,7 @@
 <button routerLink="/">Go Back</button>
 
 <ng-container *ngIf="(pokemonDetails$ | async) as pokemonDetails">
-  <h1>
+  <h1 id="name">
     <span>{{ getPadId(pokemonDetails.id) }}</span
     >{{ getCapitalize(pokemonDetails.name) }}
   </h1>

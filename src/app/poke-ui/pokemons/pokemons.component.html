@@ -1,8 +1,12 @@
-<br /><br /><br /><br />
+<br />
+<br />
+<br />
+<br />
+
 <h1>Search Your Pokedex</h1>
 <form [formGroup]="form" class="form">
   <app-input class="form__input" [label]="'ID'">
-    <input type="number" [formControlName]="'search'" required />
+    <input id="search" type="number" [formControlName]="'search'" required />
   </app-input>
   <app-arrow
     class="form__button"
